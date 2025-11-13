@@ -8,7 +8,7 @@ db_config = {
     'port': 5432,
     'database': 'NewDB',
     'user': 'postgres',
-    'password': 'Geirby12'
+    'password': '***'
 }
 
 # Create connection string
