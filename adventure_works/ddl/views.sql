@@ -57,9 +57,14 @@ join dim_sales_territory_data st
 create or replace view V_customer_cohors as(
 
 select customerkey,
-       TO_CHAR(min(orderdatekey), 'YYYY') || '-Q' || EXTRACT(QUARTER FROM min(orderdatekey))::int AS cohor_y_q
+       min(fiscal_quarter) cohor_y_q,
+       cast(substring(min(d.fiscal_quarter) from 3 for 4) as int) * 4
+      + cast(right(min(d.fiscal_quarter), 1) as int)
+      as cohort_quarter_index
 
-from v_sales_datamart
+
+from v_sales_datamart v
+JOIN dim_date_data d on v.orderdatekey = d.date
 where customerkey != -1
 group by customerkey
 
